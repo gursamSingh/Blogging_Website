@@ -22,4 +22,26 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
+app.post("/api/v1/signup", (req, res) => {
+  return res.status(200).json({ message: "Signup Route" });
+});
+
+app.post("/api/v1/signin", (req, res) => {
+  return res.status(200).json({ message: "Signin Route" });
+});
+
+app.post("/api/v1/blog", (req, res) => {
+  return res.status(200).json({ message: "blog post route" });
+});
+
+app.get("/api/v1/blog/:id", (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  return res.status(200).json({ message: "get the blog route" });
+});
+
+app.put("/api/v1/blog", (req, res) => {
+  return res.status(200).json({ message: "blog put route" });
+});
+
 module.exports = app;
