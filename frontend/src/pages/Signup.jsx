@@ -1,10 +1,31 @@
 import React from "react";
 import { useState } from "react";
+import axios from "axios";
+import { BACKEND_URL } from "../config.js";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+  const handleSubmit = async (name, email, password) => {
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, {
+        name: name,
+        email: email,
+        password: password,
+      });
+
+      const jwt = response.data;
+      localStorage.setItem("token", jwt);
+      navigate("/blogs");
+    } catch (err) {
+      //   alert the user to the request failed
+      alert("Error while signing up");
+    }
+  };
 
   return (
     <div className="h-screen w-screen bg-gradient-to-r from-amber-200 to-yellow-400 flex justify-center">
@@ -44,8 +65,12 @@ const Signup = () => {
             />
           </div>
         </div>
+
         <div className="flex items-center justify-center">
-          <button className="bg-white-400 h-12 w-60 rounded-3xl text-black flex justify-center items-center gap-2 font-bold hover:drop-shadow-3xl hover:bg-yellow-400 cursor-pointer mt-4">
+          <button
+            className="bg-white-400 h-12 w-60 rounded-3xl text-black flex justify-center items-center gap-2 font-bold hover:drop-shadow-3xl hover:bg-yellow-400 cursor-pointer mt-4"
+            onClick={() => handleSubmit(name, email, password)}
+          >
             Sign Up
             <svg
               xmlns="http://www.w3.org/2000/svg"
