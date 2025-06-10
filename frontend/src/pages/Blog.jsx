@@ -2,6 +2,7 @@ import React from "react";
 import { useBlog } from "../hooks/useBlog";
 import { useParams } from "react-router-dom";
 import FullBlog from "../components/FullBlog";
+import Appbar from "../components/Appbar";
 
 const Blog = () => {
   const { id } = useParams();
@@ -12,6 +13,7 @@ const Blog = () => {
   }
   return (
     <div>
+      <Appbar />
       <div>
         <FullBlog
           name={blog.author.name}

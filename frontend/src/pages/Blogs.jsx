@@ -2,6 +2,7 @@ import React from "react";
 import BlogCard from "../components/BlogCard";
 import axios from "axios";
 import { useFetchBlogs } from "../hooks/useFetchBlogs";
+import Appbar from "../components/Appbar";
 
 // Here we will get all the blogs from the backend and display them as cards
 
@@ -13,20 +14,23 @@ const Blogs = () => {
     return <div>Loading....</div>;
   }
   return (
-    <div className="flex justify-center ">
-      <div className="grid grid-cols-1">
-        {blogs.map((blog) => (
-          <BlogCard
-            key={blog._id}
-            id={blog._id}
-            name={blog.author.name}
-            title={blog.title}
-            content={blog.content}
-            publishedDate={blog.createdAt}
-          />
-        ))}
+    <>
+      <Appbar />
+      <div className="flex justify-center ">
+        <div className="grid grid-cols-1">
+          {blogs.map((blog) => (
+            <BlogCard
+              key={blog._id}
+              id={blog._id}
+              name={blog.author.name}
+              title={blog.title}
+              content={blog.content}
+              publishedDate={blog.createdAt}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
