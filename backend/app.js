@@ -24,7 +24,7 @@ app.use("/api/v1/blog", blogRouter);
 
 // Health Check
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("Hello World"); 
 });
 
 // We have the protected routes as(/blog and /blog:id)

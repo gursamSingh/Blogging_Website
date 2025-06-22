@@ -22,20 +22,23 @@ router.post("/post", authMiddleware, async (req, res) => {
     author: userId,
   });
 
-  return res.status(200).json({ message: `Blog is posted with id ${post.id}` });
+  return res.status(200).json({
+    message: `Blog is posted with id ${post.id}`,
+    id: post.id,
+  });
 });
 
 // ROUTE to get ALL the blogs
 
 router.get("/bulk", authMiddleware, async (req, res) => {
   try {
-    const response = await PostModel.find();
+    const response = await PostModel.find().populate("author", "name");
 
     console.log(response);
 
     return res.status(200).json({
       message: "All blogs fetched",
-      blogs: `${response}`,
+      blogs: response,
     });
   } catch (err) {
     console.error("Error fetching blogs:", err);
@@ -55,13 +58,13 @@ router.get("/:id", authMiddleware, async (req, res) => {
 
   const response = await PostModel.findOne({
     _id: id,
-  });
+  }).populate("author", "name");
 
-  console.log(response.title);
   return res.status(200).json({
     message: "Got the blog post",
-    title: `${response.title}`,
-    blog: `${response.content}`,
+    blog: response,
+    // title: `${response.title}`,
+    // content: `${response.content}`,
   });
 });
 
@@ -86,9 +89,7 @@ router.put("/", authMiddleware, async (req, res) => {
     );
 
     if (response.modifiedCount === 0) {
-      return res
-        .status(404)
-        .json({ message: "Blog not found or not authorized" });
+      return res.status(404).json({ message: "Blog not found or not authorized" });
     }
 
     return res.status(200).json({ message: "blog updated successfully" });
